@@ -48,7 +48,7 @@ body {
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.8);
-  background-image: url(img/edit_icon.svg);
+  background-image: url(img/avatar-edit-btn.svg);
   background-position: center center;
   background-repeat: no-repeat;
   z-index: 1;
@@ -57,13 +57,14 @@ body {
   left: 0;
   visibility: hidden;
   opacity: 0;
-  transition: opacity 0.2s linear;
+  transition: all 0.2s linear;
+  cursor: pointer;
 }
 
 .profile__avatar:hover::after{
   visibility: visible;
   opacity: 1;
-  transition: opacity 0.2s linear;
+  transition: all 0.2s linear;
 }
 
 .profile__info {
@@ -89,6 +90,19 @@ body {
   height: 18px;
 }
 
+.btn {
+  opacity: 1;
+  transition: all 0.3s linear;
+}
+
+.btn:hover {
+  opacity: 0.6;
+}
+
+
+
+
+
 .profile__work {
   text-align: center;
   font-style: normal;
@@ -105,15 +119,9 @@ body {
   max-width: 282px;
 }
 
-/* Popup-profile */
-
-.no-scroll {
-  overflow: hidden;
-  scrollbar-gutter: stable;
-}
+/* Popup common styles */
 
 .popup {
-
   width: 100%;
   min-height: 100vh;
   position: fixed;
@@ -126,7 +134,6 @@ body {
   opacity: 0;
   display: flex;
   align-items: center;
-
 }
 
 .popup-container {
@@ -142,10 +149,18 @@ body {
 .popup__btn-container {
   position: relative;
 }
+
 .popup__btn-close {
+  width: 20px;
+  height: 20px;
   position: absolute;
   right: 0;
   top: -36px;
+  transition: all 0.3s linear;
+}
+
+.popup__btn-close svg{
+  width: 100%;
 }
 
 .popup__form {
@@ -160,13 +175,6 @@ body {
   align-items: center;
   transition: all 0.5s ease;
 }
-
-.delete-form {
-  min-height: auto;
-  height: auto;
-
-}
-
 .popup__heading {
   font-weight: 900;
   font-size: 18px;
@@ -175,19 +183,9 @@ body {
   margin-bottom: 50px;
 }
 
-.heading__confirmation{
-  margin-bottom: 38px;
-  margin-right: auto;
-}
-
 .popup__field {
   color: black;
   width: 100%;
-}
-
-.confirmation-message {
-  color: black;
-  margin-right: auto;
 }
 
 .popup__error {
@@ -196,29 +194,19 @@ body {
   font-size: 12px;
   line-height: 15px;
   color: red;
-  padding-top: 13px;
-  margin-bottom: 15px;
+  padding-top: 5px;
+  margin-bottom: 25px;
   display: block;
 }
 
 .popup__input {
   padding-bottom: 13px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-  width: 100%;
-  
+  width: 100%; 
 }
 
 .error {
   border-bottom: 1px solid red;
-}
-
-.popup__btn-delete {
-  width: 100%;
-  background-color: black;
-  border-radius: 2px;
-  height: 46px;
-  transition: all 0.3s ease;
-  margin-top: auto;
 }
 
 .popup__btn-save {
@@ -230,12 +218,29 @@ body {
   margin-top: auto;
 }
 
-.popup__btn-save:hover {
-  opacity: 0.8;
+/* Popu delete confirmation */
+.delete-form {
+  min-height: auto;
+  height: auto;
 }
 
-.popup__btn-close:hover {
-  opacity: 0.8;
+.heading__confirmation{
+  margin-bottom: 38px;
+  margin-right: auto;
+}
+
+.confirmation-message {
+  color: black;
+  margin-right: auto;
+}
+
+.popup__btn-delete {
+  width: 100%;
+  background-color: black;
+  border-radius: 2px;
+  height: 46px;
+  transition: all 0.3s ease;
+  margin-top: auto;
 }
 
 /* Popup-place */
@@ -244,9 +249,18 @@ body {
   margin-right: auto;
 }
 
+/* Popup change avatar */
+
+.avatar_save-btn {
+  margin: 0;
+}
+
+.avatar__upload {
+  height: 100%;
+  min-height: fit-content;
+}
+
 /* Photo-gallery */
-
-
 
 .gallery__list {
   margin: 0 auto;
@@ -339,6 +353,7 @@ body {
   display: block;
   object-fit: cover;
   max-height: 500px;
+  width: 100%;
 }
 
 .popup-image__caption {
@@ -346,11 +361,9 @@ body {
   font-weight: 400;
   font-size: 12px;
   line-height: 15px;
+  text-align: left;
 }
 
-.image-close {
-
-}
 
 /* POPUP-CHANGE-AVATAR */
 
@@ -379,6 +392,8 @@ body {
   margin: 0 auto;
 }
 
+
+
 .active {
   visibility: visible;
   opacity: 1;
@@ -387,6 +402,13 @@ body {
 
 .checked {
   background-image: url(img/heart__checked.svg);
+}
+
+.disabled {
+  background-color: white;
+  border: 1px solid black;
+  color: black;
+  opacity: 0.2;
 }
 @media screen and (min-width: 600px) {
   .profile {
@@ -400,6 +422,10 @@ body {
     margin-right: 30px;
   }
 
+  .popup__heading {
+    font-size: 24px;
+  }
+
   .profile__work {
     text-align: left;
   }
@@ -407,5 +433,14 @@ body {
   .profile__btn-add {
     max-width: 150px;
     margin-left: auto;
+  }
+
+  .popup__btn-close {
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    right: -35px;
+    top: -35px;
+    transition: all 0.3s linear;
   }
 }

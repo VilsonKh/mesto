@@ -1,16 +1,31 @@
 import { PLACES, NEW_PLACES } from "./const.js";
 
 // Открывает попап редактирования профиля
-
+const inputName = document.querySelector(".popup__form__name");
+const inputWork = document.querySelector(".popup__form__work");
 let editBtn = document.querySelector(".profile__btn-edit");
 let popupProfile = document.querySelector(".popup-profile");
 
 editBtn.addEventListener("click", () => {
   popupProfile.classList.add("active");
+  inputName.value = profileName.innerHTML;
+  inputWork.value = profileWork.innerHTML;
   popupProfile.addEventListener("wheel", function (evt) {
     evt.preventDefault();
     evt.stopPropagation();
   });
+});
+
+// Изменения в профиле
+
+const formProfile = document.querySelector(".popup__form-profile");
+const profileName = document.querySelector(".profile__name");
+const profileWork = document.querySelector(".profile__work");
+
+formProfile.addEventListener("submit", function () {
+  profileName.innerHTML = inputName.value;
+  profileWork.innerHTML = inputWork.value;
+  formProfile.reset();
 });
 
 // Открывает редактирование аватарки
@@ -26,27 +41,13 @@ avatar.addEventListener("click", function () {
 
 // Изменяет аватарку
 
-let avatarUploadForm = document.querySelector('.avatar__upload')
-let profileAvatar = document.querySelector('.profile__avatar-img')
-let inputAvatarSource = document.querySelector('.popup__form__avatar')
+let avatarUploadForm = document.querySelector(".avatar__upload");
+let profileAvatar = document.querySelector(".profile__avatar-img");
+let inputAvatarSource = document.querySelector(".popup__form__avatar");
 
-avatarUploadForm.addEventListener('submit',function(){
-  profileAvatar.src = inputAvatarSource.value 
-  avatarUploadForm.reset()}
-)
-
-// Изменения в профиле
-
-let inputName = document.querySelector(".popup__form__name");
-let inputWork = document.querySelector(".popup__form__work");
-let formProfile = document.querySelector(".popup__form-profile");
-let profileName = document.querySelector(".profile__name");
-let profileWork = document.querySelector(".profile__work");
-
-formProfile.addEventListener("submit", function () {
-  profileName.innerHTML = inputName.value;
-  profileWork.innerHTML = inputWork.value;
-  formProfile.reset();
+avatarUploadForm.addEventListener("submit", function () {
+  profileAvatar.src = inputAvatarSource.value;
+  avatarUploadForm.reset();
 });
 
 // Открывает попап нового места
@@ -60,7 +61,6 @@ addPlaceBtn.addEventListener("click", () => {
     evt.preventDefault();
     evt.stopPropagation();
   });
- 
 });
 
 // Добавляет карточки в список из массива объектов
@@ -74,7 +74,6 @@ function createCard(place) {
   let newImg = newCard.querySelector(".card__photo");
   newImg.src = place.imgUrl;
   newImg.alt = place.alt;
-  newImg.setAttribute("number", place.number);
   let newTitle = newCard.querySelector(".card__title");
   newTitle.textContent = place.name;
   //Открывает фуллскрин изображение
@@ -86,7 +85,7 @@ function createCard(place) {
   let deleteBtn = newCard.querySelector(".card__btn-del");
   deleteBtn.addEventListener("click", handleBusketButtonClick);
   // Удалять карточку по подтверждению
-  
+
   return newCard;
 }
 
@@ -94,8 +93,8 @@ function createCard(place) {
 
 function handleBusketButtonClick(evt) {
   let popupConfirmation = document.querySelector(".popup-delete_confirmation");
-  let currentCard = evt.target.closest('.card')
-  console.log(currentCard)
+  let currentCard = evt.target.closest(".card");
+  console.log(currentCard);
 
   popupConfirmation.classList.add("active");
   popupProfile.addEventListener("wheel", function (evt) {
@@ -104,10 +103,9 @@ function handleBusketButtonClick(evt) {
   });
   let deleteCardForm = document.querySelector(".delete-form");
   deleteCardForm.addEventListener("submit", function (evt) {
-    currentCard.remove()
+    currentCard.remove();
     popupConfirmation.classList.remove("active");
   });
-
 }
 
 // Открывает фуллскрин изображение
@@ -117,7 +115,8 @@ let popupImgCaption = popupCard.querySelector(".popup-image__caption");
 
 function openPopupImg(evt) {
   popupImg.src = evt.target.src;
-  popupImgCaption.textContent = evt.target.alt;
+  popupImgCaption.textContent = evt.target.closest(".card").querySelector(".card__title").textContent;
+
   popupCard.classList.add("active");
   popupCard.addEventListener("wheel", function (evt) {
     evt.preventDefault();
@@ -144,9 +143,10 @@ function addCardHandler(evt) {
     name: inputPlaceName.value,
     imgUrl: inputPlaceSource.value,
   });
+  popupImgCaption.textContent = newCard.name;
   createForm.reset();
   galleryList.prepend(newCard);
-   popupPlace.classList.remove("active");
+  popupPlace.classList.remove("active");
 }
 
 createForm.addEventListener("submit", addCardHandler);
@@ -154,7 +154,6 @@ createForm.addEventListener("submit", addCardHandler);
 function createInitialCards(initialCards) {
   initialCards.forEach((place) => {
     galleryList.append(createCard(place));
-
   });
 }
 
@@ -176,57 +175,103 @@ closeButtons.forEach((btn) => {
   });
 });
 
-// // Валидация
+ // Валидация
+  //Валидация формы добавления карточки
+let createFormInputs = createForm.querySelectorAll("input");
 
-// let inputs = document.querySelectorAll(".popup__input");
-// let forms = document.querySelectorAll(".popup__form");
+createFormInputs.forEach((input) => {
+  input.addEventListener("input", function () {
+    if (checkPlaceForm()) {
+      input.closest("form").querySelector("button").classList.remove("disabled");
+      input.closest("form").querySelector("button").classList.add("btn");
+    } else {
+      input.closest("form").querySelector("button").classList.add("disabled");
+      input.closest("form").querySelector("button").classList.remove("btn"); 
+    }
 
-// function CustomValidation() {}
+  });
+});
+inputPlaceName.addEventListener('input',function(){
+  if(inputPlaceName.value==''){
+    inputPlaceName.closest('label').querySelector('span').textContent = 'Вы пропустили это поле.'
+  } else {
+    inputPlaceName.closest('label').querySelector('span').textContent = '' 
+  }
+})
 
-// CustomValidation.prototype = {
-//   invalidities: [],
-//   checkValidity: function (input) {
-//     var validity = input.validity;
+inputPlaceSource.addEventListener('input', function(evt){
+  if(inputPlaceSource.value==''){
+    inputPlaceSource.closest('label').querySelector('span').textContent = 'Введите адрес сайта.' 
+  }
+})
 
-//     if (validity.patternMismatch) {
-//       this.addInvalidity("This is the wrong pattern for this field");
+
+function checkPlaceForm() {
+  if (inputPlaceName.validity.valid && inputPlaceSource.validity.valid) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+  //Валидация формы редактирования профиля
+  
+  let editProfileInputs = formProfile.querySelectorAll("input");
+
+  editProfileInputs.forEach((input) => {
+    input.addEventListener("input", function () {
+      if (checkProfileForm()) {
+        input.closest("form").querySelector("button").classList.remove("disabled");
+        input.closest("form").querySelector("button").classList.add("btn");
+        input.closest('label').querySelector('span').textContent = '';
+      } else {
+        input.closest("form").querySelector("button").classList.add("disabled");
+        input.closest("form").querySelector("button").classList.remove("btn");
+        input.closest('label').querySelector('span').textContent = 'Вы пропустили это поле.'
+      }
+  
+    });
+  });
+
+  function checkProfileForm() {
+    if (inputName.validity.valid && inputWork.validity.valid) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+
+  let forms = document.querySelectorAll('form');
+  forms.forEach((form)=>{
+    form.addEventListener('submit',function(evt){
+      evt.preventDefault()
+      evt.stopPropagation()
+    })
+  })
+
+// inputs.forEach((input)=>{
+//   if(input.value ==""){
+//     input.closest('form').querySelector('button').classList.toggle('disabled')
+//     input.closest('form').querySelector('button').classList.toggle('btn')
+//   }
+//   input.addEventListener('input',function(evt){
+
+//     if(input.validity.tooShort){
+
+//     } else if(input.validity.tooLong) {
+
+//     }else if(input.validity.valid){
+//       input.closest('form').querySelector('button').classList.toggle('disabled')
+//       input.closest('form').querySelector('button').classList.toggle('btn')
+//     } else {
+
 //     }
 
-//     if (validity.rangeOverflow) {
-//       var max = getAttributeValue(input, "max");
-//       this.addInvalidity("The maximum value should be " + max);
+//     if(input.value.length === 0){
+
+//       console.log('error')
 //     }
 
-//     if (validity.rangeUnderflow) {
-//       var min = getAttributeValue(input, "min");
-//       this.addInvalidity("The minimum value should be " + min);
-//     }
-
-//     if (validity.stepMismatch) {
-//       var step = getAttributeValue(input, "step");
-//       this.addInvalidity("This number needs to be a multiple of " + step);
-//     }
-//   },
-
-//   addInvalidity: function (message) {
-//     this.invalidities.push(message);
-//   },
-
-//   getInvalidities: function () {
-//     return this.invalidities.join(". \n");
-//   },
-// };
-// forms.forEach((form) => {
-//   form.addEventListener("click", function (e) {
-//     for (var i = 0; i < inputs.length; i++) {
-//       var input = inputs[i];
-
-//       if (input.checkValidity() == false) {
-//         var inputCustomValidation = new CustomValidation();
-//         inputCustomValidation.checkValidity(input);
-//         var customValidityMessage = inputCustomValidation.getInvalidities();
-//         input.setCustomValidity(customValidityMessage);
-//       }
-//     }
-//   });
-// });
+//   })
+// })

@@ -81,7 +81,7 @@
           <div class="profile__info">
             <div class="profile__name-container">
               <h1 class="profile__name">Вильсон Хечикянц</h1>
-              <button class="profile__btn-edit">
+              <button class="profile__btn-edit btn">
                 <svg
                   width="24"
                   height="24"
@@ -99,7 +99,7 @@
             </div>
             <p class="profile__work">Frontend разработчик</p>
           </div>
-          <button class="profile__btn-add">
+          <button class="profile__btn-add btn">
             <svg
               width="16"
               height="16"
@@ -117,8 +117,8 @@
 
         <div class="popup popup-profile" data-popup="profile">
           <div class="popup-container">
-            <div class="popup__btn-container btn">
-              <button class="popup__btn-close" data-popup="profile">
+            <div class="popup__btn-container">
+              <button class="btn popup__btn-close ">
                 <svg
                   width="20"
                   height="20"
@@ -133,7 +133,7 @@
                 </svg>
               </button>
             </div>
-            <form action="#" class="popup__form popup__form-profile">
+            <form name='editProfile' action="#" class="popup__form popup__form-profile" autocomplete="off">
               <h3 class="popup__heading">Редактировать профиль</h3>
               <label class="popup__field">
                 <input
@@ -141,10 +141,10 @@
                   class="popup__form__name popup__input"
                   id="name"
                   tabindex="0"
-                  data-min-length="2"
-                  data-max-length="20"
                   placeholder="Имя"
-                  novalidation
+
+                  name="name"
+                  required
                 />
                 <span class="popup__error"></span>
               </label>
@@ -154,13 +154,14 @@
                   class="popup__form__work popup__input"
                   id="work"
                   tabindex="0"
-                  data-min-length="2"
-                  data-max-length="30"
+  
                   placeholder="Работа"
+                  name="work"
+                  required
                 />
                 <span class="popup__error"></span>
               </label>
-              <button class="popup__btn-save" type="submit">Сохранить</button>
+              <button class="popup__btn-save btn" type="submit" >Сохранить</button>
             </form>
           </div>
         </div>
@@ -168,7 +169,7 @@
         <div class="popup popup-place" data-popup="place">
           <div class="popup-container">
             <div class="popup__btn-container btn">
-              <button class="popup__btn-close" data-popup="place">
+              <button class="popup__btn-close btn" data-popup="place">
                 <svg
                   width="20"
                   height="20"
@@ -188,6 +189,7 @@
               action="#"
               method="get post"
               class="popup__form"
+              autocomplete="off"
             >
               <h3 class="popup__heading heading__place">Новое место</h3>
               <label class="popup__field">
@@ -196,22 +198,26 @@
                   class="popup__form__place popup__input"
                   id="place"
                   tabindex="0"
-                  maxlength="30"
+
                   placeholder="Название"
+                  name="placeName"
+                  required
                 />
                 <span class="popup__error"></span>
               </label>
               <label class="popup__field">
                 <input
-                  type="text"
+                  type="url"
                   class="popup__form__source popup__input"
                   id="source"
                   tabindex="0"
                   placeholder="Ссылка на картинку"
+                  name="source"
+                  required
                 />
                 <span class="popup__error"></span>
               </label>
-              <button type="submit" class="popup__btn-save">Создать</button>
+              <button type="submit" class="disabled popup__btn-save">Создать</button>
             </form>
           </div>
         </div>
@@ -219,7 +225,7 @@
         <div class="popup popup-change_avatar">
           <div class="popup-container">
             <div class="popup__btn-container btn">
-              <button class="popup__btn-close" data-popup="place">
+              <button class="popup__btn-close btn" data-popup="place">
                 <svg
                   width="20"
                   height="20"
@@ -250,10 +256,13 @@
                 />
                 <span class="popup__error"></span>
               </label>
-              <div class="preview-container">
-                <img class="img-preview" src="" alt="" />
-              </div>
-              <button for="avatar__upload" type="submit" class="popup__btn-save">Создать</button>
+              <button
+                for="avatar__upload"
+                type="submit"
+                class="btn popup__btn-save avatar_save-btn"
+              >
+                Создать
+              </button>
             </form>
           </div>
         </div>
@@ -266,11 +275,11 @@
                 <div class="card__description">
                   <div class="card__description-container">
                     <h2 class="card__title"></h2>
-                    <button class="card__btn-likes"></button>
+                    <button class="card__btn-likes btn"></button>
                     <!-- <span class="card__likes-counter">0</span> -->
                   </div>
                 </div>
-                <button class="card__btn-del">
+                <button class="card__btn-del btn">
                   <svg
                     width="18"
                     height="19"
@@ -295,7 +304,7 @@
 
         <div class="popup popup-image">
           <figure class="popup-image__figure">
-            <button class="popup__btn-close image-close" data-popup="image">
+            <button class="btn popup__btn-close image-close" data-popup="image">
               <svg
                 width="20"
                 height="20"
@@ -309,14 +318,16 @@
                 />
               </svg>
             </button>
-            <img class="popup-image__img" src="#" alt="" />
-            <figcaption class="popup-image__caption"></figcaption>
+            <div>
+              <img class="popup-image__img" src="#" alt="" />
+              <figcaption class="popup-image__caption"></figcaption>
+            </div>
           </figure>
         </div>
 
         <div class="popup popup-delete_confirmation">
           <div class="popup-container">
-            <button class="popup__btn-close image-close" data-popup="image">
+            <button class="popup__btn-close btn image-close" data-popup="image">
               <svg
                 width="20"
                 height="20"
@@ -336,12 +347,8 @@
               method="get post"
               class="popup__form delete-form"
             >
-              <h3 class="popup__heading heading__confirmation">
-                Вы уверены?
-              </h3>
-              <button type="submit" class="popup__btn-delete">
-               Да
-              </button>
+              <h3 class="popup__heading heading__confirmation">Вы уверены?</h3>
+              <button type="submit" class="popup__btn-delete btn">Да</button>
             </form>
           </div>
         </div>
