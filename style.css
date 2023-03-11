@@ -278,6 +278,13 @@ body {
   margin: 0 auto;
 }
 
+.card__photo-container{
+  height: 282px;
+  width: 282px;
+  background-color: gray;
+  border-radius: 10px 10px 0 0;
+}
+
 .card__photo:hover {
   cursor: pointer;
 }

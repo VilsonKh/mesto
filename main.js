@@ -175,8 +175,8 @@ closeButtons.forEach((btn) => {
   });
 });
 
- // Валидация
-  //Валидация формы добавления карточки
+// Валидация
+//Валидация формы добавления карточки
 let createFormInputs = createForm.querySelectorAll("input");
 
 createFormInputs.forEach((input) => {
@@ -186,25 +186,37 @@ createFormInputs.forEach((input) => {
       input.closest("form").querySelector("button").classList.add("btn");
     } else {
       input.closest("form").querySelector("button").classList.add("disabled");
-      input.closest("form").querySelector("button").classList.remove("btn"); 
+      input.closest("form").querySelector("button").classList.remove("btn");
     }
-
   });
 });
-inputPlaceName.addEventListener('input',function(){
-  if(inputPlaceName.value==''){
-    inputPlaceName.closest('label').querySelector('span').textContent = 'Вы пропустили это поле.'
+
+inputPlaceName.addEventListener("input", function () {
+  if (inputPlaceName.value == "") {
+    inputPlaceName.closest("label").querySelector("span").textContent = "Вы пропустили это поле.";
+  } else if (inputPlaceName.value.length < 2) {
+    inputPlaceName.closest("label").querySelector("span").textContent = "Минимальное количество символов - 2.";
   } else {
-    inputPlaceName.closest('label').querySelector('span').textContent = '' 
+    inputPlaceName.closest("label").querySelector("span").textContent = "";
   }
-})
+});
 
-inputPlaceSource.addEventListener('input', function(evt){
-  if(inputPlaceSource.value==''){
-    inputPlaceSource.closest('label').querySelector('span').textContent = 'Введите адрес сайта.' 
+inputPlaceSource.addEventListener("input", function (evt) {
+  if (inputPlaceSource.value == "") {
+    inputPlaceSource.closest("label").querySelector("span").textContent = "Вы пропустили это поле.";
+  } else if (!inputPlaceSource.value.startsWith("https://www")) {
+    inputPlaceSource.closest("label").querySelector("span").textContent = "Введите адрес сайта.";
+  } else {
+    inputPlaceSource.closest("label").querySelector("span").textContent = "";
   }
-})
+});
 
+// let formPlace = document.querySelector('.formPlace')
+
+// if (checkEmptyInput(inputPlaceName) || checkEmptyInput(inputPlaceSource) || checkSourceInput(inputPlaceSource)) {
+//   formPlace.querySelector("button").classList.remove("disabled");
+//   formPlace.querySelector("button").classList.add("btn");
+// }
 
 function checkPlaceForm() {
   if (inputPlaceName.validity.valid && inputPlaceSource.validity.valid) {
@@ -214,41 +226,43 @@ function checkPlaceForm() {
   }
 }
 
-  //Валидация формы редактирования профиля
-  
-  let editProfileInputs = formProfile.querySelectorAll("input");
+//Валидация формы редактирования профиля
 
-  editProfileInputs.forEach((input) => {
-    input.addEventListener("input", function () {
-      if (checkProfileForm()) {
-        input.closest("form").querySelector("button").classList.remove("disabled");
-        input.closest("form").querySelector("button").classList.add("btn");
-        input.closest('label').querySelector('span').textContent = '';
-      } else {
-        input.closest("form").querySelector("button").classList.add("disabled");
-        input.closest("form").querySelector("button").classList.remove("btn");
-        input.closest('label').querySelector('span').textContent = 'Вы пропустили это поле.'
-      }
-  
-    });
+let editProfileInputs = formProfile.querySelectorAll("input");
+
+editProfileInputs.forEach((input) => {
+  input.addEventListener("input", function () {
+    if (checkProfileForm()) {
+      input.closest("form").querySelector("button").classList.remove("disabled");
+      input.closest("form").querySelector("button").classList.add("btn");
+      input.closest("label").querySelector("span").textContent = "";
+    } else if(input.value.length == 0) {
+      input.closest("form").querySelector("button").classList.add("disabled");
+      input.closest("form").querySelector("button").classList.remove("btn");
+      input.closest("label").querySelector("span").textContent = "Вы пропустили это поле.";
+    }else if (input.value.length < 3) {
+      input.closest("form").querySelector("button").classList.add("disabled");
+      input.closest("form").querySelector("button").classList.remove("btn");
+      input.closest("label").querySelector("span").textContent = "Минимальное количество символов - 3.";
+    } 
   });
+});
 
-  function checkProfileForm() {
-    if (inputName.validity.valid && inputWork.validity.valid) {
-      return true;
-    } else {
-      return false;
-    }
+function checkProfileForm() {
+  if (inputName.validity.valid && inputWork.validity.valid) {
+    return true;
+  } else {
+    return false;
   }
+}
 
-
-  let forms = document.querySelectorAll('form');
-  forms.forEach((form)=>{
-    form.addEventListener('submit',function(evt){
-      evt.preventDefault()
-      evt.stopPropagation()
-    })
-  })
+let forms = document.querySelectorAll("form");
+forms.forEach((form) => {
+  form.addEventListener("submit", function (evt) {
+    evt.preventDefault();
+    evt.stopPropagation();
+  });
+});
 
 // inputs.forEach((input)=>{
 //   if(input.value ==""){

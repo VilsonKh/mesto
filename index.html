@@ -142,7 +142,7 @@
                   id="name"
                   tabindex="0"
                   placeholder="Имя"
-
+                  minlength="3"
                   name="name"
                   required
                 />
@@ -154,7 +154,7 @@
                   class="popup__form__work popup__input"
                   id="work"
                   tabindex="0"
-  
+                  minlength="3"
                   placeholder="Работа"
                   name="work"
                   required
@@ -188,7 +188,7 @@
               name="cardForm"
               action="#"
               method="get post"
-              class="popup__form"
+              class="popup__form form_place"
               autocomplete="off"
             >
               <h3 class="popup__heading heading__place">Новое место</h3>
@@ -198,7 +198,7 @@
                   class="popup__form__place popup__input"
                   id="place"
                   tabindex="0"
-
+                  minlength="2"
                   placeholder="Название"
                   name="placeName"
                   required
@@ -253,6 +253,7 @@
                   class="popup__form__avatar popup__input"
                   id="place"
                   placeholder="Ссылка на картинку"
+                
                 />
                 <span class="popup__error"></span>
               </label>
@@ -271,12 +272,13 @@
           <ul class="gallery__list">
             <template class="template__card">
               <li class="card">
-                <img class="card__photo" src="#" alt="" />
+                <div class="card__photo-container">
+                  <img class="card__photo" src="#" alt="" />
+                </div>
                 <div class="card__description">
                   <div class="card__description-container">
                     <h2 class="card__title"></h2>
                     <button class="card__btn-likes btn"></button>
-                    <!-- <span class="card__likes-counter">0</span> -->
                   </div>
                 </div>
                 <button class="card__btn-del btn">
@@ -342,7 +344,6 @@
               </svg>
             </button>
             <form
-              name="cardForm"
               action="#"
               method="get post"
               class="popup__form delete-form"
