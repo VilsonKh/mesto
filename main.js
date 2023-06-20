@@ -1,48 +1,60 @@
-import { PLACES, NEW_PLACES } from "./const.js";
+import { cardsData } from "./js/getData";
+
+let currentForm = "";
+
+// Блокирует скролл при открытом попапе
+function blockScroll(evt) {
+	evt.preventDefault();
+	evt.stopPropagation();
+}
+
+// Удаляет обработчик события скролла
+function removeScrollHandler(popup) {
+	popup.removeEventListener("wheel", (evt) => blockScroll(evt));
+}
+
+// Добавляет обработчик события скролла
+function addScrollHandler(popup) {
+	popup.addEventListener("wheel", (evt) => blockScroll(evt));
+}
 
 // Открывает попап редактирования профиля
+const editBtn = document.querySelector(".profile__btn-edit");
 const inputName = document.querySelector(".popup__form__name");
 const inputWork = document.querySelector(".popup__form__work");
-let editBtn = document.querySelector(".profile__btn-edit");
-let popupProfile = document.querySelector(".popup-profile");
+const popupProfile = document.querySelector(".popup-profile");
 
 editBtn.addEventListener("click", () => {
 	popupProfile.classList.add("active");
+	currentForm = document.querySelector("[name='editProfileForm']");
+	showErrorMessage(currentForm);
 	inputName.value = profileName.innerHTML;
 	inputWork.value = profileWork.innerHTML;
-	popupProfile.addEventListener("wheel", function (evt) {
-		evt.preventDefault();
-		evt.stopPropagation();
-	});
+	addScrollHandler(popupProfile);
 });
 
-// Изменения в профиле и закрытие формы
-
+// Изменяет данные в профиле и закрывает попап
 const profileBtnSave = document.querySelector("#profileSaveBtn");
-const placeBtnSave = document.querySelector("#placeSaveBtn");
-const avatarBtnSave = document.querySelector("#avatarSaveBtn");
 const formProfile = document.querySelector(".popup__form-profile");
 const profileName = document.querySelector(".profile__name");
 const profileWork = document.querySelector(".profile__work");
-console.log(profileBtnSave);
 
 formProfile.addEventListener("submit", function () {
 	profileName.innerHTML = inputName.value;
 	profileWork.innerHTML = inputWork.value;
 	popupProfile.classList.remove("active");
 	profileBtnSave.setAttribute("disabled", true);
-	formProfile.reset();
+	removeScrollHandler(popupProfile);
 });
 
-// Открывает редактирование аватарки
-let avatar = document.querySelector(".profile__avatar");
-let popupAvatarChange = document.querySelector(".popup__change-avatar");
+// Открывает попап редактирования аватарки
+const avatar = document.querySelector(".profile__avatar");
+const popupAvatarChange = document.querySelector(".popup__change-avatar");
 avatar.addEventListener("click", function () {
 	popupAvatarChange.classList.add("active");
-	popupAvatarChange.addEventListener("wheel", function (evt) {
-		evt.preventDefault();
-		evt.stopPropagation();
-	});
+	currentForm = document.querySelector("[name='changeAvatarForm']");
+	showErrorMessage(currentForm);
+	addScrollHandler(popupAvatarChange);
 });
 
 // Изменяет аватарку
@@ -55,23 +67,21 @@ avatarUploadForm.addEventListener("submit", function () {
 	profileAvatar.src = inputAvatarSource.value;
 	popupAvatarChange.classList.remove("active");
 	avatarUploadForm.reset();
+	removeScrollHandler(popupAvatarChange);
 });
 
 // Открывает попап нового места
-
 let addPlaceBtn = document.querySelector(".profile__btn-add");
 let popupPlace = document.querySelector(".popup-place");
 
 addPlaceBtn.addEventListener("click", () => {
 	popupPlace.classList.add("active");
-	popupPlace.addEventListener("wheel", function (evt) {
-		evt.preventDefault();
-		evt.stopPropagation();
-	});
+	currentForm = document.querySelector("[name='addPlaceForm']");
+	showErrorMessage(currentForm);
+	addScrollHandler(popupPlace);
 });
 
 // Добавляет карточки в список из массива объектов
-
 let galleryList = document.querySelector(".gallery__list");
 let listTemplate = document.querySelector(".template__card").content;
 let card = listTemplate.querySelector(".card");
@@ -90,26 +100,21 @@ function createCard(place) {
 	likeBtn.addEventListener("click", handleLikeButtonClick);
 	// Открывает попап подтверждения удаления карточки
 	let deleteBtn = newCard.querySelector(".card__btn-del");
-	deleteBtn.addEventListener("click", handleBusketButtonClick);
 	// Удалять карточку по подтверждению
+	deleteBtn.addEventListener("click", handleBusketButtonClick);
 
 	return newCard;
 }
 
 // Открывает попап подтверждения удаления
-
 function handleBusketButtonClick(evt) {
 	let popupConfirmation = document.querySelector(".popup-delete_confirmation");
 	let currentCard = evt.target.closest(".card");
-	console.log(currentCard);
 
 	popupConfirmation.classList.add("active");
-	popupProfile.addEventListener("wheel", function (evt) {
-		evt.preventDefault();
-		evt.stopPropagation();
-	});
+	popupProfile.addEventListener("wheel", (evt) => blockScroll(evt));
 	let deleteCardForm = document.querySelector(".delete-form");
-	deleteCardForm.addEventListener("submit", function (evt) {
+	deleteCardForm.addEventListener("submit", () => {
 		currentCard.remove();
 		popupConfirmation.classList.remove("active");
 	});
@@ -125,22 +130,18 @@ function openPopupImg(evt) {
 	popupImgCaption.textContent = evt.target.closest(".card").querySelector(".card__title").textContent;
 
 	popupCard.classList.add("active");
-	popupCard.addEventListener("wheel", function (evt) {
-		evt.preventDefault();
-		evt.stopPropagation();
-	});
+	addScrollHandler(popupCard);
 }
 
-createInitialCards(PLACES);
+createInitialCards(cardsData);
 
 // Добавляет интерактивный лайк
 function handleLikeButtonClick(evt) {
 	evt.target.classList.toggle("checked");
 }
 
-// Добавляю новые карточки по заполнению формы
-
-let createForm = document.querySelector("[name='cardForm']");
+// Добавляет новые карточки по заполнению формы
+let createForm = document.querySelector("[name='addPlaceForm']");
 const inputPlaceName = document.getElementById("place");
 const inputPlaceSource = document.getElementById("source");
 
@@ -184,154 +185,48 @@ window.addEventListener("click", function (evt) {
 let closeButtons = document.querySelectorAll(".popup__btn-close");
 closeButtons.forEach((btn) => {
 	btn.addEventListener("click", function (evt) {
-		evt.target.closest(".popup").classList.remove("active");
+		const popup = evt.target.closest(".popup");
+		popup.classList.remove("active");
+		const form = popup.querySelector("form");
+		form.reset();
 	});
 });
 
-// Validation v2
+// Выводит сообщения об ошибке в поле ввода
+function showErrorMessage(form) {
+	let inputs = form.querySelectorAll("input");
+	cleanErrorMessages(form);
+	inputs.forEach((input) => {
+		input.addEventListener("input", () => {
+			buttonDisabler(form);
+			const validity = input.validity;
+			if (validity.valueMissing) {
+				validity.valueMissing;
+				input.nextElementSibling.textContent = "Вы пропустили это поле.";
+			} else if (validity.tooShort) {
+				input.nextElementSibling.textContent = "Минимальная количество символов - 2";
+			} else if (validity.typeMismatch) {
+				input.nextElementSibling.textContent = "Введите корректный адрес ссылки.";
+			} else {
+				input.nextElementSibling.textContent = "";
+			}
+		});
+	});
+}
 
-const profileInputs = document.querySelectorAll(".popup__form-profile input");
-
-// profileInputs.forEach((input) => {
-// 	input.addEventListener("input", () => {
-// 		profileBtnSave.removeAttribute("disabled");
-// 	});
-// });
-
-function showErrorMessage(input) {
-	const errorMessage = input.closest(".popup__field").querySelector(".popup__error");
-	const validity = input.validity;
-	console.log(validity);
-	console.log(validity.typeMissmatch);
-	if (validity.valueMissing) {
-		validity.valueMissing;
-		errorMessage.textContent = "Вы пропустили это поле.";
-	} else if (validity.tooShort) {
-		errorMessage.textContent = "Минимальная количество символов - 2";
-	} else if (validity.typeMismatch) {
-		errorMessage.textContent = "Введите корректный адрес ссылки.";
+// Управляет аттрибутом disabled для кнопки submit
+function buttonDisabler(form) {
+	if (form.checkValidity()) {
+		form.querySelector(".popup__btn-save").removeAttribute("disabled");
 	} else {
-		errorMessage.textContent = "";
+		form.querySelector(".popup__btn-save").setAttribute("disabled", true);
 	}
 }
 
-const allInputs = document.querySelectorAll("input");
-allInputs.forEach((input) => {
-	input.addEventListener("input", () => showErrorMessage(input));
-});
-
-function validation(input1, input2) {}
-// Валидация
-//Валидация формы добавления карточки
-// let createFormInputs = createForm.querySelectorAll("input");
-
-// createFormInputs.forEach((input) => {
-// 	input.addEventListener("input", function () {
-// 		if (checkPlaceForm()) {
-// 			input.closest("form").querySelector("button").classList.remove("disabled");
-// 			input.closest("form").querySelector("button").classList.add("btn");
-// 		} else {
-// 			input.closest("form").querySelector("button").classList.add("disabled");
-// 			input.closest("form").querySelector("button").classList.remove("btn");
-// 		}
-// 	});
-// });
-
-// inputPlaceName.addEventListener("input", function () {
-// 	if (inputPlaceName.value == "") {
-// 		inputPlaceName.closest("label").querySelector("span").textContent = "Вы пропустили это поле.";
-// 	} else if (inputPlaceName.value.length < 2) {
-// 		inputPlaceName.closest("label").querySelector("span").textContent = "Минимальное количество символов - 2.";
-// 	} else {
-// 		inputPlaceName.closest("label").querySelector("span").textContent = "";
-// 	}
-// });
-
-// inputPlaceSource.addEventListener("input", function (evt) {
-// 	if (inputPlaceSource.value == "") {
-// 		inputPlaceSource.closest("label").querySelector("span").textContent = "Вы пропустили это поле.";
-// 	} else if (!inputPlaceSource.value.startsWith("https://www")) {
-// 		inputPlaceSource.closest("label").querySelector("span").textContent = "Введите адрес сайта.";
-// 	} else {
-// 		inputPlaceSource.closest("label").querySelector("span").textContent = "";
-// 	}
-// });
-
-// let formPlace = document.querySelector('.formPlace')
-
-// if (checkEmptyInput(inputPlaceName) || checkEmptyInput(inputPlaceSource) || checkSourceInput(inputPlaceSource)) {
-//   formPlace.querySelector("button").classList.remove("disabled");
-//   formPlace.querySelector("button").classList.add("btn");
-// }
-
-// function checkPlaceForm() {
-// 	if (inputPlaceName.validity.valid && inputPlaceSource.validity.valid) {
-// 		return true;
-// 	} else {
-// 		return false;
-// 	}
-// }
-
-//Валидация формы редактирования профиля
-
-// let editProfileInputs = formProfile.querySelectorAll("input");
-
-// editProfileInputs.forEach((input) => {
-// 	input.addEventListener("input", function () {
-// 		if (checkProfileForm()) {
-// 			input.closest("form").querySelector("button").classList.remove("disabled");
-// 			input.closest("form").querySelector("button").classList.add("btn");
-// 			input.closest("label").querySelector("span").textContent = "";
-// 		} else if (input.value.length == 0) {
-// 			input.closest("form").querySelector("button").classList.add("disabled");
-// 			input.closest("form").querySelector("button").classList.remove("btn");
-// 			input.closest("label").querySelector("span").textContent = "Вы пропустили это поле.";
-// 		} else if (input.value.length < 3) {
-// 			input.closest("form").querySelector("button").classList.add("disabled");
-// 			input.closest("form").querySelector("button").classList.remove("btn");
-// 			input.closest("label").querySelector("span").textContent = "Минимальное количество символов - 3.";
-// 		}
-// 	});
-// });
-
-// function checkProfileForm() {
-// 	if (inputName.validity.valid && inputWork.validity.valid) {
-// 		return true;
-// 	} else {
-// 		return false;
-// 	}
-// }
-
-// let forms = document.querySelectorAll("form");
-// forms.forEach((form) => {
-// 	form.addEventListener("submit", function (evt) {
-// 		evt.preventDefault();
-// 		evt.stopPropagation();
-// 	});
-// });
-
-// inputs.forEach((input)=>{
-//   if(input.value ==""){
-//     input.closest('form').querySelector('button').classList.toggle('disabled')
-//     input.closest('form').querySelector('button').classList.toggle('btn')
-//   }
-//   input.addEventListener('input',function(evt){
-
-//     if(input.validity.tooShort){
-
-//     } else if(input.validity.tooLong) {
-
-//     }else if(input.validity.valid){
-//       input.closest('form').querySelector('button').classList.toggle('disabled')
-//       input.closest('form').querySelector('button').classList.toggle('btn')
-//     } else {
-
-//     }
-
-//     if(input.value.length === 0){
-
-//       console.log('error')
-//     }
-
-//   })
-// })
+// Очищает поле ошибки ввода
+function cleanErrorMessages(form) {
+	const errorMessages = form.querySelectorAll(".popup__error");
+	errorMessages.forEach((message) => {
+		message.textContent = "";
+	});
+}
