@@ -18,16 +18,16 @@
 			<main class="main">
 				<section class="profile">
 					<div class="profile__avatar">
-						<img class="profile__avatar-img" src="img/image.jpg" alt="profile-photo" />
+						<img class="profile__avatar-img" src="img/profilePreloader.gif" alt="profile-photo" />
 					</div>
 					<div class="profile__info">
 						<div class="profile__name-container">
-							<h1 class="profile__name">Жак-Ив Кусто</h1>
+							<h1 class="profile__name"></h1>
 							<button class="profile__btn-edit btn">
 								<img src="img/edit_icon.svg" alt="edit icon" />
 							</button>
 						</div>
-						<p class="profile__work">Исследователь океана</p>
+						<p class="profile__work"></p>
 					</div>
 					<button class="profile__btn-add btn">
 						<img src="img/add_icon.svg" alt="add icon" />
@@ -48,7 +48,7 @@
 								<span class="popup__error"></span>
 							</label>
 							<label class="popup__field">
-								<input type="text" class="popup__form__work popup__input" id="work" tabindex="0" minlength="3" placeholder="Работа" name="work" required />
+								<input type="text" class="popup__form__work popup__input" id="work" tabindex="0" minlength="3" maxlength="60" placeholder="Работа" name="work" required />
 								<span class="popup__error"></span>
 							</label>
 							<button class="popup__btn-save btn" type="submit" id="profileSaveBtn" disabled>Сохранить</button>
@@ -66,11 +66,11 @@
 						<form name="addPlaceForm" action="#" class="popup__form" autocomplete="off">
 							<h3 class="popup__heading heading__place">Новое место</h3>
 							<label class="popup__field">
-								<input type="text" class="popup__form__place popup__input" id="place" tabindex="0" minlength="2" placeholder="Название" name="placeName" required />
+								<input type="text" class="popup__form__place popup__input" id="place" tabindex="0" minlength="2" maxlength="80" placeholder="Название" name="title" required />
 								<span class="popup__error"></span>
 							</label>
 							<label class="popup__field">
-								<input type="url" class="popup__form__source popup__input" id="source" tabindex="0" placeholder="Ссылка на картинку" name="source" required />
+								<input type="url" class="popup__form__source popup__input" id="source" tabindex="0" placeholder="Ссылка на картинку" name="img" required />
 								<span class="popup__error"></span>
 							</label>
 							<button type="submit" id="placeSaveBtn" class="btn popup__btn-save" disabled>Создать</button>
@@ -88,34 +88,33 @@
 						<form name="changeAvatarForm" action="#" class="popup__form avatar__upload">
 							<h3 class="popup__heading heading__place">Обновить аватар</h3>
 							<label class="popup__field">
-								<input type="url" class="popup__form__avatar popup__input" id="avatarSrc" placeholder="Ссылка на картинку" required />
+								<input type="url" class="popup__form__avatar popup__input" id="avatarSrc" placeholder="Ссылка на картинку" name="avatar" required />
 								<span class="popup__error"></span>
 							</label>
-							<button id="avatarSaveBtn" for="avatar__upload" type="submit" class="btn popup__btn-save avatar_save-btn" disabled>Создать</button>
+							<button id="avatarSaveBtn" for="changeAvatarForm" type="submit" class="btn popup__btn-save avatar_save-btn" disabled>Создать</button>
 						</form>
 					</div>
 				</div>
 
 				<section class="photo-gallery">
-					<ul class="gallery__list">
-						<template class="template__card">
-							<li class="card">
-								<div class="card__photo-container">
-									<img class="card__photo" src="#" alt="" />
-								</div>
-								<div class="card__description">
-									<div class="card__description-container">
-										<h2 class="card__title"></h2>
-										<button class="card__btn-likes btn"></button>
-									</div>
-								</div>
-								<button class="card__btn-del btn">
-									<img src="img/delete_icon.svg" alt="delete icon" />
-								</button>
-							</li>
-						</template>
-					</ul>
+					<ul class="gallery__list"></ul>
 				</section>
+				<template class="template__card">
+					<li class="card">
+						<div class="card__photo-container">
+							<img class="card__photo" src="img/profilePreloader.gif" alt="" />
+						</div>
+						<div class="card__description">
+							<div class="card__description-container">
+								<h2 class="card__title"></h2>
+								<button class="card__btn-likes btn"></button>
+							</div>
+						</div>
+						<button class="card__btn-del btn">
+							<img src="img/delete_icon.svg" alt="delete icon" />
+						</button>
+					</li>
+				</template>
 
 				<div class="popup popup-image">
 					<figure class="popup-image__figure">
@@ -143,7 +142,6 @@
 				<p class="footer__copyright">&copy; Вильсон Хечикянц</p>
 			</footer>
 		</div>
-
 		<script src="js/getData.js" type="module"></script>
 	</body>
 </html>

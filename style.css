@@ -206,16 +206,14 @@ body {
   padding-top: 5px;
   margin-bottom: 25px;
   display: block;
+  height: 15px;
+
 }
 
 .popup__input {
   padding-bottom: 13px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
   width: 100%; 
-}
-
-.popup__input.error {
-  border-bottom: 1px solid red;
 }
 
 .popup__btn-save {
@@ -266,12 +264,19 @@ body {
   border-radius: 10px;
   position: relative;
   margin: 0 auto;
+  transition: all .3s linear;
+}
+
+.card:hover {
+  opacity: .7;
 }
 
 .card__photo-container{
   height: 282px;
   width: 282px;
-  background-color: gray;
+  background-image: url(img/profilePreloader.gif);
+  background-repeat:no-repeat;
+  background-position: center;
   border-radius: 10px 10px 0 0;
 }
 
@@ -310,6 +315,7 @@ body {
   max-width: 80%;
   overflow: hidden;
   text-overflow: ellipsis;
+  height: 80%;
 }
 
 .card__btn-likes {
@@ -320,10 +326,16 @@ body {
   background-position: center center;
 }
 
+.card__btn-likes.checked {
+  background-image: url(img/heart__checked.svg);
+}
+
 .card__btn-del {
   position: absolute;
   top: 20px;
   right: 14px;
+  width: 30px;
+  height: 30px;
 }
 
 /* POPUP-IMAGE */
@@ -371,10 +383,6 @@ body {
   visibility: visible;
   opacity: 1;
   transition: opacity 0.25s, visibility 0.25s;
-}
-
-.checked {
-  background-image: url(img/heart__checked.svg);
 }
 
 @media screen and (min-width: 655px) {
