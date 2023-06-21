@@ -14,6 +14,7 @@ newPlaceForm.addEventListener("submit", (e) => {
 	createFormData(e);
 	addCardData(formData);
 	popupPlace.classList.remove("active");
+	newPlaceForm.reset();
 });
 
 // Заполняет профиль
@@ -137,6 +138,7 @@ export function createCard(places) {
 		let newImg = newCard.querySelector(".card__photo");
 		newImg.src = place.img;
 		newImg.alt = place.title;
+		newImg.addEventListener("error", () => (newImg.src = "img/imgError.webp"));
 		const newTitle = newCard.querySelector(".card__title");
 		newTitle.textContent = place.title;
 		console.log({ title: place.title, id: place.id });
@@ -163,7 +165,8 @@ function handleBusketButtonClick(evt) {
 	popupConfirmation.classList.add("active");
 	popupProfile.addEventListener("wheel", (evt) => blockScroll(evt));
 	let deleteCardForm = document.querySelector(".delete-form");
-	deleteCardForm.addEventListener("submit", () => {
+	deleteCardForm.addEventListener("submit", (e) => {
+		e.preventDefault();
 		let currentCardId = evt.target.closest(".card").id;
 		deleteData(currentCardId);
 		popupConfirmation.classList.remove("active");
@@ -230,15 +233,18 @@ function showErrorMessage(form) {
 		input.addEventListener("input", () => {
 			buttonDisabler(form);
 			const validity = input.validity;
-			if (validity.valueMissing) {
-				validity.valueMissing;
-				input.nextElementSibling.textContent = "Вы пропустили это поле.";
-			} else if (validity.tooShort) {
-				input.nextElementSibling.textContent = "Минимальная количество символов - 2";
-			} else if (validity.typeMismatch) {
-				input.nextElementSibling.textContent = "Введите корректный адрес ссылки.";
+			if (!input.checkValidity()) {
+				input.style.borderBottom = "1px solid red";
+				if (validity.valueMissing) {
+					input.nextElementSibling.textContent = "Вы пропустили это поле.";
+				} else if (validity.tooShort) {
+					input.nextElementSibling.textContent = "Минимальная количество символов - 2";
+				} else if (validity.typeMismatch) {
+					input.nextElementSibling.textContent = "Введите корректный адрес ссылки.";
+				}
 			} else {
 				input.nextElementSibling.textContent = "";
+				input.style.borderBottom = "";
 			}
 		});
 	});
