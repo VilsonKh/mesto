@@ -1,9 +1,9 @@
-import { db } from "../firebase/config.js";
+import { db } from "./config.js";
 import { collection, onSnapshot } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
-import { createCard, fillProfile } from "../main.js";
+import { createCards } from "../createCards.js";
+import { fillProfile } from "../fillProfile.js";
 
 export async function getCards() {
-	console.log("загружаю новые карточки");
 	await onSnapshot(collection(db, "cards"), (snapshot) => {
 		const cardsData = [];
 		snapshot.docs.forEach((doc) => {
@@ -11,7 +11,8 @@ export async function getCards() {
 		});
 		cardsData.sort((a, b) => a.date - b.date);
 		document.querySelectorAll(".card").forEach((item) => item.remove());
-		createCard(cardsData);
+		createCards(cardsData);
+		console.log(cardsData);
 	});
 }
 

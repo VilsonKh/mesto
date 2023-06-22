@@ -1,0 +1,52 @@
+<svg width="282" height="282" viewBox="0 0 282 282" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <style>
+        @keyframes gg{
+            0%{
+                stop-color: grey;
+            }
+            50%, 75%{
+                stop-color: white;
+            }
+            100%{
+                stop-color: grey;
+            }
+        }
+        @keyframes gg-2{
+            0%{
+                stop-color: white;
+            }
+            50%, 75%{
+                stop-color: grey;
+            }
+            100%{
+                stop-color: white;
+            }
+        }
+        .first{
+            animation: gg 5s linear infinite;
+        }
+        .second{
+            animation: gg-2 5s linear infinite;
+        }
+
+        #Gradient {
+          animation: shine 5s linear infinite;
+        }
+
+        @keyframes shine {
+          to {
+            x2: 1;
+          }
+        }
+
+       
+    </style>
+    <defs>
+        <linearGradient id="Gradient" x1="0" y1="1" x2="0" y2="1">
+            <stop class="line" offset="0%" stop-color='rgba(255, 255, 255, 0)'/>
+            <stop class="line" offset="50%" stop-color='rgba(255, 255, 255, 0.5)'/>
+            <stop class="line" offset="80%" stop-color='rgba(255, 255, 255, 0)'/>
+        </linearGradient>
+    </defs>
+    <rect width="282" height="282" fill="url(#Gradient)"/>
+</svg>
