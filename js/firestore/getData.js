@@ -1,10 +1,22 @@
 import { db } from "./config.js";
-import { collection, onSnapshot } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
+import { collection, onSnapshot, orderBy, query, limit } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
 import { createCards } from "../createCards.js";
 import { fillProfile } from "../fillProfile.js";
 
+let limitCard = 6;
+
+(function limitIncrement() {
+	const loadBtn = document.querySelector(".load__btn");
+	loadBtn.addEventListener("click", () => {
+		limitCard += 3;
+		console.log(limitCard);
+		getCards();
+	});
+})();
+
 export async function getCards() {
-	await onSnapshot(collection(db, "cards"), (snapshot) => {
+	const ref = query(collection(db, "cards"), orderBy("date", "desc"), limit(limitCard));
+	await onSnapshot(ref, (snapshot) => {
 		const cardsData = [];
 		snapshot.docs.forEach((doc) => {
 			cardsData.push({ ...doc.data(), id: doc.id });

@@ -10,9 +10,9 @@ export function fillProfile(data) {
 	testImg.addEventListener("error", () => (avatar.src = "img/imgError.webp"));
 	const profileName = document.querySelector(".profile__name");
 
-	profileName.innerHTML = data.name;
+	profileName.textContent = data.name;
 	const profileWork = document.querySelector(".profile__work");
-	profileWork.innerHTML = data.work;
+	profileWork.textContent = data.work;
 	const profile = document.querySelector(".profile");
 	profile.setAttribute("id", data.id);
 }

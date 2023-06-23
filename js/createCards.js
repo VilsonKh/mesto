@@ -17,6 +17,8 @@ export function createCards(places) {
 		testImg.addEventListener("load", () => {
 			newImg.src = place.img;
 			newImg.alt = place.title;
+			const imgContainer = document.getElementById(place.id).querySelector("div");
+			imgContainer.style.background = "lightgray";
 		});
 		testImg.addEventListener("error", () => (newImg.src = "img/imgError.webp"));
 

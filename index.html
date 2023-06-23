@@ -72,16 +72,7 @@
 								<span class="popup__error"></span>
 							</label>
 							<label class="popup__field">
-								<input
-									type="url"
-									pattern="(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})"
-									class="popup__form__source popup__input"
-									id="source"
-									tabindex="0"
-									placeholder="Ссылка на картинку"
-									name="img"
-									required
-								/>
+								<input type="url" class="popup__form__source popup__input" id="source" tabindex="0" placeholder="Ссылка на картинку" name="img" required />
 								<span class="popup__error"></span>
 							</label>
 							<button type="submit" id="placeSaveBtn" class="btn popup__btn-save" disabled>Создать</button>
@@ -99,15 +90,7 @@
 						<form name="changeAvatarForm" class="popup__form avatar__upload">
 							<h3 class="popup__heading heading__place">Обновить аватар</h3>
 							<label class="popup__field">
-								<input
-									type="url"
-									class="popup__form__avatar popup__input"
-									id="avatarSrc"
-									placeholder="Ссылка на картинку"
-									name="avatar"
-									pattern="(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})"
-									required
-								/>
+								<input type="url" class="popup__form__avatar popup__input" id="avatarSrc" placeholder="Ссылка на картинку" name="avatar" required />
 								<span class="popup__error"></span>
 							</label>
 							<button id="avatarSaveBtn" for="changeAvatarForm" type="submit" class="btn popup__btn-save avatar_save-btn" disabled>Создать</button>
@@ -118,6 +101,7 @@
 				<section class="photo-gallery">
 					<ul class="gallery__list"></ul>
 				</section>
+				<button class="load__btn btn">Load more</button>
 				<template class="template__card">
 					<li class="card">
 						<div class="card__photo-container skeleton-loader">

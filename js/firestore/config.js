@@ -2,12 +2,12 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebas
 import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
 
 const firebaseConfig = {
-	apiKey: "AIzaSyAytpANIcQfAaB0UxbGZqo5BA_YPMiYggM",
-	authDomain: "mesto-d3949.firebaseapp.com",
-	projectId: "mesto-d3949",
-	storageBucket: "mesto-d3949.appspot.com",
-	messagingSenderId: "251950108656",
-	appId: "1:251950108656:web:ce5f89dff9b08b607f1735",
+	apiKey: "AIzaSyDDBt4i6-ETU2Shu6XNhCkvimsRHfdGe1A",
+	authDomain: "mesto-project-cae47.firebaseapp.com",
+	projectId: "mesto-project-cae47",
+	storageBucket: "mesto-project-cae47.appspot.com",
+	messagingSenderId: "1020488787603",
+	appId: "1:1020488787603:web:49ea097949b415c1aa4f66",
 };
 
 // const firebaseConfig = {

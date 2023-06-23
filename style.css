@@ -424,3 +424,13 @@ body {
 		background-position: 100% 0, 0 0;
 	}
 }
+
+.load__btn {
+	display: inline-block;
+	position: relative;
+	left: 50%;
+	transform: translateX(-50%);
+	border: 1px solid white;
+	padding: 10px;
+	margin-bottom: 20px;
+}
