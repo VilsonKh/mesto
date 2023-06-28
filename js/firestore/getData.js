@@ -1,9 +1,10 @@
 import { db } from "./config.js";
-import { collection, onSnapshot, orderBy, query, limit, startAfter, startAt } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
+import { collection, onSnapshot, orderBy, query, limit, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
 import { createCards } from "../createCards.js";
 import { fillProfile } from "../fillProfile.js";
 
 let limitCard = 6;
+// let visibleCardsCount = 0;
 
 export async function getCards() {
 	const ref = query(collection(db, "cards"), orderBy("date", "desc"), limit(limitCard));
@@ -19,13 +20,49 @@ export async function getCards() {
 	await onSnapshot(ref, snapshotConst);
 }
 
-(function limitIncrement() {
+(function limitIncrementHandler() {
 	const loadBtn = document.querySelector(".load__btn");
-	loadBtn.addEventListener("click", () => {
-		limitCard += 3;
-		getCards();
-	});
+	loadBtn.addEventListener("click", limitIncrement);
 })();
+
+async function limitIncrement() {
+	console.log(await checkQuantity());
+	limitCard += 3;
+	loadBtnToggler();
+	getCards();
+}
+
+export async function loadBtnToggler() {
+	console.log(limitCard);
+	if ((await checkQuantity()) <= limitCard) {
+		document.querySelector(".load__btn").setAttribute("disabled", true);
+	} else if ((await checkQuantity()) > limitCard) {
+		document.querySelector(".load__btn").removeAttribute("disabled");
+	}
+}
+
+async function checkQuantity() {
+	const docRef = doc(db, "checkQuantity/VjLm1zqlZK1dkkTAuI7G");
+	const docSnap = await getDoc(docRef);
+	console.log(docSnap.data().quantityNumb + " " + "общее число карточек");
+	return docSnap.data().quantityNumb;
+}
+
+export async function cardsQuantityDecrement() {
+	const currentNumb = +(await checkQuantity());
+	const data = { quantityNumb: `${currentNumb - 1}` };
+	const docRef = doc(db, "checkQuantity", "VjLm1zqlZK1dkkTAuI7G");
+	updateDoc(docRef, data);
+
+	limitCard -= 1;
+}
+
+export async function cardsQuantityIncrement() {
+	const currentNumb = +(await checkQuantity());
+	const data = { quantityNumb: `${currentNumb + 1}` };
+	const docRef = doc(db, "checkQuantity", "VjLm1zqlZK1dkkTAuI7G");
+	updateDoc(docRef, data);
+}
 
 export async function getProfile() {
 	await onSnapshot(collection(db, "profiles"), (snapshot) => {

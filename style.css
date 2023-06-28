@@ -136,6 +136,7 @@ body {
 	height: 50px;
 	border-radius: 2px;
 	max-width: 282px;
+	flex-shrink: 0;
 }
 
 /* Popup common styles */
@@ -318,7 +319,7 @@ body {
 	max-width: 80%;
 	overflow: hidden;
 	text-overflow: ellipsis;
-	height: 80%;
+	white-space: nowrap;
 }
 
 .card__btn-likes {
@@ -452,6 +453,10 @@ body {
 	border: 1px solid white;
 	padding: 10px;
 	margin-bottom: 20px;
+}
+
+.load__btn:disabled {
+	opacity: 0.5;
 }
 
 .noConnection {

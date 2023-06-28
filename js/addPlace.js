@@ -1,5 +1,6 @@
 import { createFormData } from "./utils/createFormData.js";
 import { setTimeoutAddDoc } from "./firestore/addData.js";
+import { cardsQuantityIncrement, loadBtnToggler } from "./firestore/getData.js";
 
 // Отправляет в базу новое место, введенное пользователем
 export function addPlace() {
@@ -14,6 +15,8 @@ export function addPlace() {
 
 		testImg.addEventListener("load", async () => {
 			popupPlace.classList.remove("active");
+			await cardsQuantityIncrement();
+			loadBtnToggler();
 			const testServ = await setTimeoutAddDoc(createFormData(e));
 			if (testServ.timeout) {
 				await testServ.promise;

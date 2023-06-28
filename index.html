@@ -50,11 +50,11 @@
 						<form name="editProfileForm" class="popup__form popup__form-profile" autocomplete="off">
 							<h3 class="popup__heading">Редактировать профиль</h3>
 							<label class="popup__field">
-								<input type="text" class="popup__form__name popup__input" id="name" tabindex="0" placeholder="Имя" minlength="3" maxlength="20" name="name" required />
+								<input type="text" class="popup__form__name popup__input" id="name" tabindex="0" placeholder="Имя" minlength="3" maxlength="15" name="name" required />
 								<span class="popup__error"></span>
 							</label>
 							<label class="popup__field">
-								<input type="text" class="popup__form__work popup__input" id="work" tabindex="0" minlength="3" maxlength="60" placeholder="Работа" name="work" required />
+								<input type="text" class="popup__form__work popup__input" id="work" tabindex="0" minlength="3" maxlength="40" placeholder="Работа" name="work" required />
 								<span class="popup__error"></span>
 							</label>
 							<button class="popup__btn-save btn" type="submit" id="profileSaveBtn" disabled>Сохранить</button>
@@ -105,7 +105,7 @@
 				<section class="photo-gallery">
 					<ul class="gallery__list"></ul>
 				</section>
-				<button class="load__btn btn">Load more</button>
+				<button class="load__btn">Load more</button>
 				<template class="template__card">
 					<li class="card">
 						<div class="card__photo-container skeleton-loader">
