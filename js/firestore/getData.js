@@ -26,31 +26,33 @@ export async function getCards() {
 })();
 
 async function limitIncrement() {
-	console.log(await checkQuantity());
 	limitCard += 3;
 	loadBtnToggler();
 	getCards();
 }
 
 export async function loadBtnToggler() {
-	console.log(limitCard);
-	if ((await checkQuantity()) <= limitCard) {
+	if (cardsAvailable <= limitCard) {
 		document.querySelector(".load__btn").setAttribute("disabled", true);
-	} else if ((await checkQuantity()) > limitCard) {
+	} else if (cardsAvailable > limitCard) {
 		document.querySelector(".load__btn").removeAttribute("disabled");
 	}
 }
 
-async function checkQuantity() {
-	const docRef = doc(db, "checkQuantity/VjLm1zqlZK1dkkTAuI7G");
-	const docSnap = await getDoc(docRef);
-	console.log(docSnap.data().quantityNumb + " " + "общее число карточек");
-	return docSnap.data().quantityNumb;
-}
+let cardsAvailable = 0;
+
+(async function checkQuantity() {
+	const ref = doc(db, "checkQuantity/VjLm1zqlZK1dkkTAuI7G");
+	const docRef = (snapshot) => {
+		if (snapshot.data().quantityNumb) {
+			cardsAvailable = snapshot.data().quantityNumb;
+		}
+	};
+	onSnapshot(ref, docRef);
+})();
 
 export async function cardsQuantityDecrement() {
-	const currentNumb = +(await checkQuantity());
-	const data = { quantityNumb: `${currentNumb - 1}` };
+	const data = { quantityNumb: `${cardsAvailable - 1}` };
 	const docRef = doc(db, "checkQuantity", "VjLm1zqlZK1dkkTAuI7G");
 	updateDoc(docRef, data);
 
@@ -58,10 +60,11 @@ export async function cardsQuantityDecrement() {
 }
 
 export async function cardsQuantityIncrement() {
-	const currentNumb = +(await checkQuantity());
-	const data = { quantityNumb: `${currentNumb + 1}` };
+	const data = { quantityNumb: `${cardsAvailable + 1}` };
 	const docRef = doc(db, "checkQuantity", "VjLm1zqlZK1dkkTAuI7G");
 	updateDoc(docRef, data);
+
+	limitCard += 1;
 }
 
 export async function getProfile() {
