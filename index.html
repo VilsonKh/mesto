@@ -8,7 +8,7 @@
 		<link rel="preconnect" href="https://fonts.googleapis.com%22%3E/" />
 		<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin />
 		<link href="https://fonts.googleapis.com/css?family=Inter:100,200,300,regular,500,600,700,800,900" rel="stylesheet" />
-		<script src="js/main.js" type="module" defer></script>
+		<script src="main.js" type="module" defer></script>
 		<link rel="preload" href="style.css" as="style" />
 		<link rel="stylesheet" href="style.css" />
 	</head>
@@ -18,6 +18,10 @@
 				<img class="header__logo" src="img/logo.svg" alt="logo" />
 			</header>
 			<main class="main">
+				<div class="noConnection">
+					<p class="noConnection__text">Отсутствует подключение к интернету</p>
+				</div>
+
 				<section class="profile">
 					<div class="profile__avatar skeleton-loader">
 						<img width="120" height="120" class="profile__avatar-img" alt="" />
@@ -46,7 +50,7 @@
 						<form name="editProfileForm" class="popup__form popup__form-profile" autocomplete="off">
 							<h3 class="popup__heading">Редактировать профиль</h3>
 							<label class="popup__field">
-								<input type="text" class="popup__form__name popup__input" id="name" tabindex="0" placeholder="Имя" minlength="3" name="name" required />
+								<input type="text" class="popup__form__name popup__input" id="name" tabindex="0" placeholder="Имя" minlength="3" maxlength="20" name="name" required />
 								<span class="popup__error"></span>
 							</label>
 							<label class="popup__field">

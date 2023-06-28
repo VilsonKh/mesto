@@ -1,5 +1,3 @@
-import { submitButtonToggler } from "./sumbitButtonToggler.js";
-
 // Закрытие по области вокруг попапа
 (function overlayClickHandler() {
 	window.addEventListener("click", function (evt) {

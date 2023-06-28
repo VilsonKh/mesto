@@ -1,0 +1,15 @@
+
+{
+  "name": "testing-vanilla-js",
+  "description": "Learn how to test your JavaScript.",
+  "version": "1.0.0",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "test:unit": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
+  },
+  "devDependencies": {
+    "jest": "^29.5.0",
+    "jest-environment-jsdom": "^29.5.0"
+  }
+}

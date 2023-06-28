@@ -1,8 +1,9 @@
 // Закрывает попапа по крестику
-(function closePopupHandler() {
+export function closePopupHandler() {
 	const closeButtons = document.querySelectorAll(".popup__btn-close");
 	closeButtons.forEach((btn) => {
 		btn.addEventListener("click", function (evt) {
+			evt.preventDefault();
 			const popup = evt.target.closest(".popup");
 			popup.classList.remove("active");
 			const form = popup.querySelector("form");
@@ -11,4 +12,4 @@
 			saveBtns.forEach((btn) => btn.setAttribute("disabled", "true"));
 		});
 	});
-})();
+}

@@ -1,8 +1,16 @@
 import { addDoc, collection } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
 import { db } from "./config.js";
 
-export function addCardData(formData) {
-	addDoc(collection(db, "cards"), { ...formData, date: new Date().getTime(), isLiked: false });
+const ref = collection(db, "cards");
 
-	console.log("отправлены новые данные на сервер");
+export async function setTimeoutAddDoc(formData) {
+	const time = 1000;
+	const setPromise = addDoc(ref, { ...formData, date: new Date().getTime(), isLiked: false });
+
+	return Promise.race([
+		setPromise.then(() => ({ timeout: false })),
+		new Promise((resolve, reject) => {
+			setTimeout(resolve, time, { timeout: true, promise: setPromise });
+		}),
+	]);
 }

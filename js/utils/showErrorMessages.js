@@ -1,5 +1,5 @@
 import { cleanErrorMessages } from "./cleanErrorMessages.js";
-import { submitButtonToggler } from "./sumbitButtonToggler.js";
+import { submitButtonToggler } from "../sumbitButtonToggler.js";
 
 // Выводит сообщения об ошибке в поле ввода
 export function showErrorMessages(form) {
@@ -7,17 +7,6 @@ export function showErrorMessages(form) {
 	cleanErrorMessages(form);
 	inputs.forEach((input) => {
 		input.addEventListener("input", () => {
-			// if (input.type === "url") {
-			// 	const testImg = new Image();
-			// 	testImg.src = input.value;
-			// 	testImg.addEventListener("load", () => {
-			// 		return;
-			// 	});
-			// 	testImg.addEventListener("error", () => {
-			// 		alert("Это не картинка");
-			// 	});
-			// }
-
 			submitButtonToggler(form);
 			const validity = input.validity;
 			if (!input.checkValidity()) {
