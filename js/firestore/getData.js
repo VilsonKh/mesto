@@ -1,10 +1,9 @@
 import { db } from "./config.js";
-import { collection, onSnapshot, orderBy, query, limit, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
+import { collection, onSnapshot, orderBy, query, limit, doc, updateDoc } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
 import { createCards } from "../createCards.js";
 import { fillProfile } from "../fillProfile.js";
 
 let limitCard = 6;
-// let visibleCardsCount = 0;
 
 export async function getCards() {
 	const ref = query(collection(db, "cards"), orderBy("date", "desc"), limit(limitCard));

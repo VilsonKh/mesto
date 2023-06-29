@@ -2,10 +2,11 @@ import { createFormData } from "./utils/createFormData.js";
 import { setTimeoutAddDoc } from "./firestore/addData.js";
 import { cardsQuantityIncrement, loadBtnToggler } from "./firestore/getData.js";
 
+const popupPlace = document.querySelector(".popup-place");
+const newPlaceForm = document.querySelector("[name=addPlaceForm]");
+
 // Отправляет в базу новое место, введенное пользователем
 export function addPlace() {
-	let popupPlace = document.querySelector(".popup-place");
-	const newPlaceForm = document.querySelector("[name=addPlaceForm]");
 	newPlaceForm.addEventListener("submit", async (e) => {
 		e.preventDefault();
 
@@ -21,6 +22,8 @@ export function addPlace() {
 			if (testServ.timeout) {
 				await testServ.promise;
 			}
+			setTimeout(() => newPlaceForm.reset(), 200);
+			newPlaceForm.querySelector(".popup__btn-save").setAttribute("disabled", true);
 		});
 		testImg.addEventListener("error", () => {
 			srcField.nextElementSibling.textContent = "По этому адресу нет изображения.";

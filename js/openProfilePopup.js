@@ -1,5 +1,4 @@
 import { addScrollHandler } from "./utils/addScrollHandler.js";
-import { showErrorMessages } from "./utils/showErrorMessages.js";
 
 // Открывает попап редактирования профиля
 export function openProfilePopupHandler() {
@@ -12,7 +11,6 @@ export function openProfilePopupHandler() {
 
 	editBtn.addEventListener("click", () => {
 		popupProfile.classList.add("active");
-		showErrorMessages(document.querySelector("[name='editProfileForm']"));
 		inputName.value = profileName.innerHTML;
 		inputWork.value = profileWork.innerHTML;
 		addScrollHandler(popupProfile);

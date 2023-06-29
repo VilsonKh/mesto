@@ -7,7 +7,8 @@ export function closePopupHandler() {
 			const popup = evt.target.closest(".popup");
 			popup.classList.remove("active");
 			const form = popup.querySelector("form");
-			form.reset();
+			setTimeout(() => form.reset(), 200);
+
 			const saveBtns = document.querySelectorAll(".popup__btn-save");
 			saveBtns.forEach((btn) => btn.setAttribute("disabled", "true"));
 		});

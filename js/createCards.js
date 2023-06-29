@@ -3,17 +3,17 @@ import { handleLikeButtonClick } from "./clickLikeHandler.js";
 import { openFullscreenImgHandler } from "./openFullscreenImg.js";
 import { testImg } from "./utils/imageTest.js";
 
-// Добавляет карточки в список из массива объектов
+const galleryList = document.querySelector(".gallery__list");
+const cardTemplate = document.querySelector(".template__card").content;
+const card = cardTemplate.querySelector(".card");
 
+// Добавляет карточки в список из массива объектов
 export function createCards(places) {
 	places.map((place) => {
-		const galleryList = document.querySelector(".gallery__list");
-		const cardTemplate = document.querySelector(".template__card").content;
-		const card = cardTemplate.querySelector(".card");
 		const newCard = card.cloneNode(true);
 		const newImg = newCard.querySelector(".card__photo");
-
 		const newTitle = newCard.querySelector(".card__title");
+
 		newTitle.textContent = place.title;
 		newCard.setAttribute("id", place.id);
 
