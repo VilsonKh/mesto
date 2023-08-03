@@ -2,7 +2,7 @@
 
 The Mesto website is an online platform where users can share their photos and interact with them.
 
-The **Mesto website** can be accessed via [this link](https://vilsonkh.github.io/mesto/)
+The **Mesto website** can be accessed via [this link]()
 
 ## Project Functionality
 
