@@ -6,7 +6,6 @@ The **Mesto website** can be accessed via [this link](htts://projects.devilson.m
 
 ## Project Functionality
 
-
 <img width="1920" alt="Audiophile" src="https://github.com/VilsonKh/VilsonKh/blob/main/mesto-min.webp">
 
 The website allows users to add, delete, and like images, as well as edit their profile and change avatar. The user's photos are stored in a Firestore database.
