@@ -2,9 +2,12 @@
 
 The Mesto website is an online platform where users can share their photos and interact with them.
 
-The **Mesto website** can be accessed via [this link]()
+The **Mesto website** can be accessed via [this link](htts://projects.devilson.me/mesto)
 
 ## Project Functionality
+
+
+<img width="1920" alt="Audiophile" src="https://github.com/VilsonKh/VilsonKh/blob/main/mesto-min.webp">
 
 The website allows users to add, delete, and like images, as well as edit their profile and change avatar. The user's photos are stored in a Firestore database.
 Also it includes form validation to ensure user input is correct and checks for the presence of images at the specified user-provided addresses.

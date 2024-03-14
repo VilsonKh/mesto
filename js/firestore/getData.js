@@ -1,5 +1,5 @@
 import { db } from "./config.js";
-import { collection, onSnapshot, orderBy, query, limit, doc, updateDoc } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
+import { collection, onSnapshot, orderBy, query, limit, doc, updateDoc, getDocs } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
 import { createCards } from "../createCards.js";
 import { fillProfile } from "../fillProfile.js";
 
